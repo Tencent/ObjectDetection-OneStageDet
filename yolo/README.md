@@ -56,7 +56,7 @@ open cfgs/yolov2.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet
 open cfgs/yolov3.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet_cache`
 
 ##### 3) weights
-Download model weights from [baiduyun](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw), and move all the model weights to "${yolo_root}/weights" directory.
+Download model weights from [here](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw) and move all the model weights to "${yolo_root}/weights" directory.
 
 ### Training
 ##### 1) Yolov2
@@ -88,14 +88,14 @@ The logs and weights will be in `${yolo_root}/outputs`.
 
 1.2) run
 
-`python examples/train.py Yolov2`
+`python examples/test.py Yolov2`
 
 ##### 2) Yolov3
 2.1) open cfgs/yolov3.yml, let the `gpus` of `test` block point to an available gpu id
 
 2.2) run
 
-`python examples/train.py Yolov3`
+`python examples/test.py Yolov3`
 
 ##### 3) Results
 The output bbox will be in `${yolo_root}/results`,  every line of the file in   `${yolo_root}/results` has a format like `img_name confidence xmin ymin xmax ymax`
