@@ -1,5 +1,5 @@
 output_root: "outputs"
-output_version: "test"
+output_version: "baseline"
 backup_name: "weights"
 log_name: "logs"
 
