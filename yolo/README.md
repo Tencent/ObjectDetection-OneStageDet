@@ -10,7 +10,7 @@
 | Yolov2  | 77.6% |
 | Yolov3  | 79.6% |
 
-- Train as fast as darknet
+- Train as fast as [darknet](https://github.com/pjreddie/darknet)
 
 ### Preparation
 ##### 1) Code
@@ -79,7 +79,7 @@ Download model weights from [baiduyun](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GY
 
 `python examples/train.py Yolov3`
 
-#### 3) Results
+##### 3) Results
 The logs and weights will be in `${yolo_root}/outputs`.
 
 ### Evaluation
