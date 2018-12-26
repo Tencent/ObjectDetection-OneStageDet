@@ -1,0 +1,3 @@
+cfg_dict:
+    Yolov3: yolov3.yml
+    Yolov2: yolov2.yml
