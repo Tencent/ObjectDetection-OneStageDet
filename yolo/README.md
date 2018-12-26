@@ -3,7 +3,7 @@
 - pytorch 0.4.0
 ### Features
 - Include both Yolov2 and Yolov3
-- Good performance
+- Good performance(trained with this implementation)
 
 |544x544 |VOC2007 Test(mAP)|
 | :-: | :-:|
