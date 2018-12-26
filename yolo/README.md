@@ -6,10 +6,8 @@
 - Good performance
 
 |544x544 |VOC2007 Test(mAP)|
-| ------------ | ------------ |
-
+| :-: | :-:|
 | Yolov2  | 77.6% |
-
 | Yolov3  | 79.6% |
 
 - Train as fast as darknet
