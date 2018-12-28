@@ -56,7 +56,15 @@ open cfgs/yolov2.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet
 open cfgs/yolov3.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet_cache`
 
 ##### 3) weights
-Download model weights from [baidudrive](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw) or [googledrive](https://drive.google.com/open?id=1nW3u35_5b0ILs2u9TOQ5Nubjx8-1ewwc), and move all the model weights to `${yolo_root}/weights` directory.
+Download model weights from [baidudrive](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw) or [googledrive](https://drive.google.com/open?id=1nW3u35_5b0ILs2u9TOQ5Nubjx8-1ewwc).
+
+Or downlowd [darknet19_448.conv.23](https://pjreddie.com/media/files/darknet19_448.conv.23) and [darknet53.conv.74](https://pjreddie.com/media/files/darknet53.conv.74) from darknet website:
+
+`wget https://pjreddie.com/media/files/darknet19_448.conv.23`
+
+`wget https://pjreddie.com/media/files/darknet53.conv.74`
+
+Then, move all the model weights to `${yolo_root}/weights` directory.
 
 ### Training
 `cd ${yolo_root}`
