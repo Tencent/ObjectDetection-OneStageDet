@@ -56,17 +56,20 @@ open cfgs/yolov2.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet
 open cfgs/yolov3.yml, let the `data_root_dir` point to `${VOCdevkit_root}/onedet_cache`
 
 ##### 3) weights
-Download model weights from [here](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw) and move all the model weights to "${yolo_root}/weights" directory.
+Download model weights from [baidudrive](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw) or [googledrive](https://drive.google.com/open?id=1nW3u35_5b0ILs2u9TOQ5Nubjx8-1ewwc), and move all the model weights to `${yolo_root}/weights` directory.
 
 ### Training
-##### 1) Yolov2
 `cd ${yolo_root}`
+
+##### 1) Yolov2
 
 1.1) open cfgs/yolov2.yml, let the `weights` of `train` block point to the pretrain weights
 
 1.2) open cfgs/yolov2.yml, let the `gpus` of `train` block point to an available gpu id
 
-1.3) run
+1.3) If you want to print log onto screen, make the `stdout` of `train` block `True`
+
+1.4) run
 
 `python examples/train.py Yolov2`
 
@@ -75,7 +78,9 @@ Download model weights from [here](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RG
 
 2.2) open cfgs/yolov3.yml, let the `gpus`  of `train` block point to an available gpu id
 
-2.3) run
+2.3) If you want to print log onto screen, make the `stdout` of `train` block `True`
+
+2.4) run
 
 `python examples/train.py Yolov3`
 
@@ -83,6 +88,8 @@ Download model weights from [here](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RG
 The logs and weights will be in `${yolo_root}/outputs`.
 
 ### Evaluation
+`cd ${yolo_root}`
+
 ##### 1) Yolov2
 1.1) open cfgs/yolov2.yml, let the `gpus` of `test` block point to an available gpu id
 
