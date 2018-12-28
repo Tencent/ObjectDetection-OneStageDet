@@ -75,7 +75,7 @@ Then, move all the model weights to `${yolo_root}/weights` directory.
 
 1.2) open cfgs/yolov2.yml, let the `gpus` of `train` block point to an available gpu id
 
-1.3) If you want to print log onto screen, make the `stdout` of `train` block `True`
+1.3) If you want to print log onto screen, make the `stdout` of `train` block `True` in cfgs/yolov2.yml
 
 1.4) run
 
@@ -86,7 +86,7 @@ Then, move all the model weights to `${yolo_root}/weights` directory.
 
 2.2) open cfgs/yolov3.yml, let the `gpus`  of `train` block point to an available gpu id
 
-2.3) If you want to print log onto screen, make the `stdout` of `train` block `True`
+2.3) If you want to print log onto screen, make the `stdout` of `train` block `True` in cfgs/yolov3.yml
 
 2.4) run
 
