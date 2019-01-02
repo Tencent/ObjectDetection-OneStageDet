@@ -11,7 +11,7 @@
 | Yolov3  | 79.6% |
 
 - Train as fast as [darknet](https://github.com/pjreddie/darknet)
-- A lot of available efficient backbones
+- A lot of efficient backbones on hand
 
   Like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. 
 
@@ -120,7 +120,7 @@ The logs and weights will be in `${yolo_root}/outputs`.
 ##### 3) Results
 The output bbox will be in `${yolo_root}/results`,  every line of the file in   `${yolo_root}/results` has a format like `img_name confidence xmin ymin xmax ymax`
 
-### Benchmark the speed of network
+### Benchmarking the speed of network
 `cd ${yolo_root}`
 
 ##### 1) Yolov2
