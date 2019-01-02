@@ -183,7 +183,7 @@ The output bbox will be in `${yolo_root}/results`,  every line of the file in   
 `python examples/speed.py RegionMobilenet`
 
 ##### 6) Other backbones with region loss
-You can try these like `#5) Mobilenet` part.
+You can try these like [5) Mobilenet](#5-mobilenet) part.
 
 ---
 
