@@ -11,6 +11,11 @@
 | Yolov3  | 79.6% |
 
 - Train as fast as [darknet](https://github.com/pjreddie/darknet)
+- A lot of available efficient backbones
+
+  Like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. 
+
+  Check folder `vedanet/network/backbone` for details.
 
 ### Preparation
 ##### 1) Code
@@ -114,6 +119,47 @@ The logs and weights will be in `${yolo_root}/outputs`.
 
 ##### 3) Results
 The output bbox will be in `${yolo_root}/results`,  every line of the file in   `${yolo_root}/results` has a format like `img_name confidence xmin ymin xmax ymax`
+
+### Benchmark the speed of network
+`cd ${yolo_root}`
+
+##### 1) Yolov2
+1.1) open cfgs/yolov2.yml, let the `gpus` of `speed` block point to an available gpu id
+
+1.2) run
+
+`python examples/speed.py Yolov2`
+
+##### 2) Yolov3
+2.1) open cfgs/yolov3.yml, let the `gpus` of `speed` block point to an available gpu id
+
+2.2) run
+
+`python examples/speed.py Yolov3`
+
+##### 3) Tiny Yolov2
+3.1) open cfgs/tiny_yolov2.yml, let the `gpus` of `speed` block point to an available gpu id
+
+3.2) run
+
+`python examples/speed.py TinyYolov2`
+
+##### 4) Tiny Yolov3
+4.1) open cfgs/tiny_yolov3.yml, let the `gpus` of `speed` block point to an available gpu id
+
+4.2) run
+
+`python examples/speed.py TinyYolov3`
+
+##### 5) Mobilenet
+5.1) open cfgs/region_mobilenet.yml, let the `gpus` of `speed` block point to an available gpu id
+
+5.2) run
+
+`python examples/speed.py RegionMobilenet`
+
+##### 6) Other backbones with region loss
+You can try these like `#5) Mobilenet` part.
 
 ### Credits
 I got a lot of code from [lightnet](https://gitlab.com/EAVISE/lightnet), thanks to EAVISE.
