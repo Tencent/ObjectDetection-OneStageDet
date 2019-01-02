@@ -1,15 +1,15 @@
 output_root: "outputs"
-output_version: "baseline"
+output_version: "test"
 backup_name: "weights"
 log_name: "logs"
 
 labels: ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 
-data_root_dir: "/data/mileistone/data/VOCdevkit/onedet_cache"
+data_root_dir: "/data2/yichaoxiong/data/VOCdevkit/onedet_cache"
 
 train:
     stdout: False
-    gpus: "0"
+    gpus: "6"
     nworkers: 16
     pin_mem: True
 
@@ -48,3 +48,8 @@ test:
 
     results: "results"
 
+speed:
+    gpus: "7"
+    batch_size: 1
+    max_iters: 200
+    input_shape: [544, 544]

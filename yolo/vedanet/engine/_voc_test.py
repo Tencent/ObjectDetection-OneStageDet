@@ -53,7 +53,7 @@ def VOCTest(hyper_params):
     results = hyper_params.results
 
     test_args = {'conf_thresh': conf_thresh, 'network_size': network_size, 'labels': labels}
-    net = models.__dict__[model_name](hyper_params.classes, weights, is_train=False, test_args=test_args)
+    net = models.__dict__[model_name](hyper_params.classes, weights, train_flag=2, test_args=test_args)
     net.eval()
     log.info('Net structure\n%s' % net)
     #import pdb

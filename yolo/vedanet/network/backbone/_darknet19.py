@@ -23,7 +23,6 @@ class Darknet19(nn.Module):
         - Loss function: L2 (Crossentropyloss in pytorch)
 
     Args:
-        num_classes (Number, optional): Number of classes; Default **20**
         weights_file (str, optional): Path to the saved weights; Default **None**
         input_channels (Number, optional): Number of input channels; Default **3**
 
@@ -33,7 +32,7 @@ class Darknet19(nn.Module):
 
     .. _Darknet19: https://github.com/pjreddie/darknet/blob/master/cfg/darknet19.cfg
     """
-    def __init__(self, num_classes=20):
+    def __init__(self):
         """ Network initialisation """
         super().__init__()
 

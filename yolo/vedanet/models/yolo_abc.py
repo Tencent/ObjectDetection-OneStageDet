@@ -25,7 +25,7 @@ class YoloABC(Darknet):
         self.nloss = None
         self.loss = None
         self.postprocess = None
-        self.is_train = None
+        self.train_flag = None # 1 for train, 2 for test, 0 for speed
         self.test_args = None
 
         # Network
@@ -44,7 +44,7 @@ class YoloABC(Darknet):
         """
         generate loss and postprocess
         """
-        if self.is_train:
+        if self.train_flag == 1: # train
             if self.loss is None:
                 self.loss = [] # for training
 
@@ -52,7 +52,7 @@ class YoloABC(Darknet):
                     reduction = float(x.shape[2] / features[idx].shape[2]) # n, c, h, w
                     self.loss.append(loss_fn(self.num_classes, self.anchors, self.anchors_mask[idx],
                         reduction, self.seen, head_idx=idx))
-        else:
+        elif self.train_flag == 2: # test
             if self.postprocess is None:
                 self.postprocess = [] # for testing
 
@@ -67,3 +67,4 @@ class YoloABC(Darknet):
                         vnd.transform.GetBoundingBoxes(self.num_classes, cur_anchors, conf_thresh),
                         vnd.transform.TensorToBrambox(network_size, labels)
                         ]))
+        # else, speed

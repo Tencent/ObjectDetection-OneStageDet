@@ -10,4 +10,3 @@
 """
 
 from ._darknet import *
-from ._mobilenet import *

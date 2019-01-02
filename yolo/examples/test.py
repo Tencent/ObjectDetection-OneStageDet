@@ -21,14 +21,13 @@ if __name__ == '__main__':
     parser.add_argument('model_name', help='model name', default=None)
     args = parser.parse_args()
 
-    train = False
-    #config = initEnv(train=train)
-    config = initEnv(train=train, model_name=args.model_name)
+    train_flag = 2
+    config = initEnv(train_flag=train_flag, model_name=args.model_name)
 
     log.info('Config\n\n%s\n' % pformat(config))
 
     # init env
-    hyper_params = vn.hyperparams.HyperParams(config, train=train)
+    hyper_params = vn.hyperparams.HyperParams(config, train_flag=train_flag)
 
     # init and run eng
     vn.engine.VOCTest(hyper_params)

@@ -14,6 +14,7 @@ from .cfg_parser import getConfig
 
 
 def setLogging(log_dir, stdout_flag):
+    safeMakeDirs(log_dir)
     dt = datetime.now()
     log_name = dt.strftime('%Y-%m-%d_time_%H_%M_%S') + '.log'
 
@@ -26,19 +27,24 @@ def setLogging(log_dir, stdout_flag):
         logging.basicConfig(filename=log_fp, format='%(asctime)s:%(levelname)s:%(message)s', level=logging.DEBUG)
 
 
-def combineConfig(cur_cfg, train):
+def combineConfig(cur_cfg, train_flag):
     ret_cfg = {}
     for k, v in cur_cfg.items():
-        if k == 'train' or k == 'test':
+        if k == 'train' or k == 'test' or k == 'speed':
             continue
         ret_cfg[k] = v
-    key = 'train' if train else 'test'
+    if train_flag == 1:
+        key = 'train'
+    elif train_flag == 2:
+        key = 'test'
+    else:
+        key = 'speed'
     for k, v in cur_cfg[key].items():
         ret_cfg[k] = v
     return ret_cfg
 
 
-def initEnv(train, model_name):
+def initEnv(train_flag, model_name):
     cfgs_root = 'cfgs'
     cur_cfg = getConfig(cfgs_root, model_name)
 
@@ -53,10 +59,9 @@ def initEnv(train, model_name):
     backup_dir = os.path.join(work_dir, backup_name)
     log_dir = os.path.join(work_dir, log_name)
 
-    safeMakeDirs(backup_dir)
-    safeMakeDirs(log_dir)
 
-    if train:
+    if train_flag == 1:
+        safeMakeDirs(backup_dir)
         stdout_flag = cur_cfg['train']['stdout']
         setLogging(log_dir, stdout_flag)
 
@@ -64,14 +69,17 @@ def initEnv(train, model_name):
         os.environ['CUDA_VISIBLE_DEVICES'] = gpus
 
         cur_cfg['train']['backup_dir'] = backup_dir
-    else:
+    elif train_flag == 2:
         stdout_flag = cur_cfg['test']['stdout']
         setLogging(log_dir, stdout_flag)
 
         gpus = cur_cfg['test']['gpus']
         os.environ['CUDA_VISIBLE_DEVICES'] = gpus
+    else:
+        gpus = cur_cfg['speed']['gpus']
+        os.environ['CUDA_VISIBLE_DEVICES'] = gpus
 
-    ret_cfg = combineConfig(cur_cfg, train)
+    ret_cfg = combineConfig(cur_cfg, train_flag)
 
     return ret_cfg
 

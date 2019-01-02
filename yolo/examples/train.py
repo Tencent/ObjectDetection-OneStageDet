@@ -22,14 +22,14 @@ if __name__ == '__main__':
     parser.add_argument('model_name', help='model name', default=None)
     args = parser.parse_args()
 
-    train = True
-    config = initEnv(train=train, model_name=args.model_name)
+    train_flag = 1
+    config = initEnv(train_flag=train_flag, model_name=args.model_name)
     #randomSeeding(0)
 
     log.info('Config\n\n%s\n' % pformat(config))
 
     # init env
-    hyper_params = vn.hyperparams.HyperParams(config, train=train)
+    hyper_params = vn.hyperparams.HyperParams(config, train_flag=train_flag)
 
     # int eng
     eng = vn.engine.VOCTrainingEngine(hyper_params)

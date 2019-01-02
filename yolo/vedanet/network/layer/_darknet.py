@@ -13,7 +13,8 @@ import torch.nn.functional as F
 
 __all__ = ['Conv2dBatchLeaky', 'Conv2dBatch', 'GlobalAvgPool2d', 'PaddedMaxPool2d', 'Reorg', 'SELayer',
             'CReLU', 'Scale', 'ScaleReLU', 'L2Norm', 'Conv2dL2NormLeaky', 'PPReLU', 'Conv2dBatchPPReLU',
-            'Conv2dBatchPReLU', 'Conv2dBatchPLU', 'Conv2dBatchELU', 'Conv2dBatchSELU']
+            'Conv2dBatchPReLU', 'Conv2dBatchPLU', 'Conv2dBatchELU', 'Conv2dBatchSELU',
+            'Shuffle', 'Conv2dBatchReLU']
 
 
 class Conv2dBatchLeaky(nn.Module):
@@ -36,7 +37,10 @@ class Conv2dBatchLeaky(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
         self.leaky_slope = leaky_slope
 
         # Layer
@@ -64,7 +68,10 @@ class Conv2dBatchPPReLU(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
 
         # Layer
         self.layers = nn.Sequential(
@@ -91,7 +98,10 @@ class Conv2dBatchPReLU(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
 
         # Layer
         self.layers = nn.Sequential(
@@ -118,7 +128,10 @@ class Conv2dBatchPLU(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
 
         # Layer
         self.layers = nn.Sequential(
@@ -146,6 +159,10 @@ class Conv2dBatchELU(nn.Module):
         self.kernel_size = kernel_size
         self.stride = stride
         self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
 
         # Layer
         self.layer = nn.Sequential(
@@ -172,7 +189,10 @@ class Conv2dBatchSELU(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
 
         # Layer
         self.layer = nn.Sequential(
@@ -210,7 +230,10 @@ class Conv2dBatch(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
         self.leaky_slope = leaky_slope
 
         # Layer
@@ -491,7 +514,10 @@ class Conv2dL2NormLeaky(nn.Module):
         self.out_channels = out_channels
         self.kernel_size = kernel_size
         self.stride = stride
-        self.padding = int(kernel_size/2)
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
         self.leaky_slope = leaky_slope
 
         # Layer
@@ -503,6 +529,65 @@ class Conv2dL2NormLeaky(nn.Module):
 
     def __repr__(self):
         s = '{name} ({in_channels}, {out_channels}, kernel_size={kernel_size}, stride={stride}, padding={padding}, negative_slope={leaky_slope})'
+        return s.format(name=self.__class__.__name__, **self.__dict__)
+
+    def forward(self, x):
+        x = self.layers(x)
+        return x
+
+
+## shufflenet
+class Shuffle(nn.Module):
+    def __init__(self, groups):
+        super().__init__()
+        self.groups = groups
+
+    def forward(self, x):
+        """
+        Channel shuffle: [N,C,H,W] -> [N,g,C/g,H,W] -> [N,C/g,g,H,w] -> [N,C,H,W]
+        """
+        N, C, H, W = x.size()
+        g = self.groups
+        return x.view(N, g, C/g, H, W).permute(0, 2, 1, 3, 4).contiguous().view(N, C, H, W)
+
+    def __repr__(self):
+        s = '{name} (groups={groups})'
+        return s.format(name=self.__class__.__name__, **self.__dict__)
+
+# mobilenet
+class Conv2dBatchReLU(nn.Module):
+    """ This convenience layer groups a 2D convolution, a batchnorm and a ReLU.
+    They are executed in a sequential manner.
+
+    Args:
+        in_channels (int): Number of input channels
+        out_channels (int): Number of output channels
+        kernel_size (int or tuple): Size of the kernel of the convolution
+        stride (int or tuple): Stride of the convolution
+        padding (int or tuple): padding of the convolution
+    """
+    def __init__(self, in_channels, out_channels, kernel_size, stride):
+        super(Conv2dBatchReLU, self).__init__()
+
+        # Parameters
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.kernel_size = kernel_size
+        self.stride = stride
+        if isinstance(kernel_size, (list, tuple)):
+            self.padding = [int(ii/2) for ii in kernel_size]
+        else:
+            self.padding = int(kernel_size/2)
+
+        # Layer
+        self.layers = nn.Sequential(
+            nn.Conv2d(self.in_channels, self.out_channels, self.kernel_size, self.stride, self.padding, bias=False),
+            nn.BatchNorm2d(self.out_channels),
+            nn.ReLU(inplace=True)
+        )
+
+    def __repr__(self):
+        s = '{name} ({in_channels}, {out_channels}, kernel_size={kernel_size}, stride={stride}, padding={padding})'
         return s.format(name=self.__class__.__name__, **self.__dict__)
 
     def forward(self, x):

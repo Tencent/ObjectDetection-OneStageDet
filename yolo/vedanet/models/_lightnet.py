@@ -89,6 +89,8 @@ class Lightnet(nn.Module):
             else:
                 loss = None
             '''
+            if self.postprocess is None:
+                return # speed
             loss = None
             dets = []
 

@@ -4,7 +4,7 @@ import torch
 __all__ = ['HyperParams']
 
 class HyperParams(object):
-    def __init__(self, config, train=False):
+    def __init__(self, config, train_flag=1):
         
         self.cuda = True
         self.labels = config['labels']
@@ -20,7 +20,7 @@ class HyperParams(object):
             else:
                 log.debug('CUDA enabled')
 
-        if train:
+        if train_flag == 1:
             cur_cfg = config
 
             self.nworkers = cur_cfg['nworkers'] 
@@ -56,7 +56,7 @@ class HyperParams(object):
 
             self.weights = cur_cfg['weights']
             self.clear = cur_cfg['clear']
-        else:
+        elif train_flag == 2:
             cur_cfg = config
 
             self.testfile = f'{self.data_root}/test.pkl'
@@ -68,4 +68,11 @@ class HyperParams(object):
             self.conf_thresh = cur_cfg['conf_thresh']
             self.nms_thresh = cur_cfg['nms_thresh']
             self.results = cur_cfg['results']
+
+        else:
+            cur_cfg = config
+
+            self.network_size = cur_cfg['input_shape']
+            self.batch = cur_cfg['batch_size']
+            self.max_iters = cur_cfg['max_iters']
 

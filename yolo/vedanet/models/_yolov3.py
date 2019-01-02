@@ -13,7 +13,7 @@ __all__ = ['Yolov3']
 class Yolov3(YoloABC):
     def __init__(self, num_classes=20, weights_file=None, input_channels=3,
                  anchors=[(10,13),  (16,30),  (33,23), (30,61), (62,45), (59,119), (116,90), (156,198), (373,326)],
-                 anchors_mask=[(6,7,8), (3,4,5), (0,1,2)], is_train=True, clear=False, test_args=None):
+                 anchors_mask=[(6,7,8), (3,4,5), (0,1,2)], train_flag=1, clear=False, test_args=None):
         """ Network initialisation """
         super().__init__()
 
@@ -22,7 +22,7 @@ class Yolov3(YoloABC):
         self.anchors = anchors
         self.anchors_mask = anchors_mask
         self.nloss = len(self.anchors_mask)
-        self.is_train = is_train
+        self.train_flag = train_flag
         self.test_args = test_args
 
         self.loss = None

@@ -29,6 +29,7 @@ class VOCDataset(data.BramboxDataset):
         anno_tf = data.transform.Compose([rc, rf])
 
         def identify(img_id):
+            #return f'{root}/VOCdevkit/{img_id}.jpg'
             return f'{img_id}'
 
         super(VOCDataset, self).__init__('anno_pickle', anno, network_size, labels, identify, img_tf, anno_tf)
@@ -51,7 +52,7 @@ class VOCTrainingEngine(engine.Engine):
 
         log.debug('Creating network')
         model_name = hyper_params.model_name
-        net = models.__dict__[model_name](hyper_params.classes, hyper_params.weights, is_train=True, clear=hyper_params.clear)
+        net = models.__dict__[model_name](hyper_params.classes, hyper_params.weights, train_flag=1, clear=hyper_params.clear)
         log.info('Net structure\n\n%s\n' % net)
         if self.cuda:
             net.cuda()
@@ -105,8 +106,10 @@ class VOCTrainingEngine(engine.Engine):
 
     def process_batch(self, data):
         data, target = data
+        # to(device)
         if self.cuda:
             data = data.cuda()
+        #data = torch.autograd.Variable(data, requires_grad=True)
 
         loss = self.network(data, target)
         loss.backward()
