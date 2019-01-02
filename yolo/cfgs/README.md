@@ -1,4 +1,4 @@
-GPU: Tesla V100
+GPU: Tesla P100
 
 Deep learning library: PyTorch 0.4.0
 
