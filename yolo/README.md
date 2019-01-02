@@ -1,3 +1,19 @@
+Contents
+
+[Requirements](#requirements)
+
+[Features](#features)
+
+[Preparation](#preparation)
+
+[Training](#training)
+
+[Evaluation](#evaluation)
+
+[Benchmarking the speed of network](#benchmarking-the-speed-of-network)
+
+---
+
 ### Requirements
 - python 3.6
 - pytorch 0.4.0
@@ -5,10 +21,10 @@
 - Include both Yolov2 and Yolov3
 - Good performance(trained with this implementation)
 
-|544x544 |VOC2007 Test(mAP)|
-| :-: | :-:|
-| Yolov2  | 77.6% |
-| Yolov3  | 79.6% |
+  |544x544 |VOC2007 Test(mAP)|
+  | :-: | :-:|
+  | Yolov2  | 77.6% |
+  | Yolov3  | 79.6% |
 
 - Train as fast as [darknet](https://github.com/pjreddie/darknet)
 - A lot of efficient backbones on hand
@@ -16,6 +32,8 @@
   Like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. 
 
   Check folder `vedanet/network/backbone` for details.
+
+---
 
 ### Preparation
 ##### 1) Code
@@ -71,6 +89,8 @@ Or downlowd [darknet19_448.conv.23](https://pjreddie.com/media/files/darknet19_4
 
 Then, move all the model weights to `${yolo_root}/weights` directory.
 
+---
+
 ### Training
 `cd ${yolo_root}`
 
@@ -100,6 +120,8 @@ Then, move all the model weights to `${yolo_root}/weights` directory.
 ##### 3) Results
 The logs and weights will be in `${yolo_root}/outputs`.
 
+---
+
 ### Evaluation
 `cd ${yolo_root}`
 
@@ -119,6 +141,8 @@ The logs and weights will be in `${yolo_root}/outputs`.
 
 ##### 3) Results
 The output bbox will be in `${yolo_root}/results`,  every line of the file in   `${yolo_root}/results` has a format like `img_name confidence xmin ymin xmax ymax`
+
+---
 
 ### Benchmarking the speed of network
 `cd ${yolo_root}`
@@ -160,6 +184,8 @@ The output bbox will be in `${yolo_root}/results`,  every line of the file in   
 
 ##### 6) Other backbones with region loss
 You can try these like `#5) Mobilenet` part.
+
+---
 
 ### Credits
 I got a lot of code from [lightnet](https://gitlab.com/EAVISE/lightnet), thanks to EAVISE.
