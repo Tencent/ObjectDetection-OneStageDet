@@ -19,14 +19,14 @@ Contents
 - pytorch 0.4.0
 ### Features
 - Include both Yolov2 and Yolov3
-- Good performance(trained with this implementation)
+- Good performance
 
   |544x544 |VOC2007 Test(mAP)|Time per forward<br/>(batch size = 1)|
   | :-: | :-:|:-:|
   | Yolov2  | 77.6% |11.5ms|
   | Yolov3  | 79.6% |23.1ms|
   
-  The models are trained from pretrained weights on imagenet.
+  The models are trained from pretrained weights on imagenet **with this implementation**.
 
 - Train as fast as [darknet](https://github.com/pjreddie/darknet)
 - A lot of efficient backbones on hand
@@ -40,7 +40,7 @@ Contents
   | TinyYolov2  | 57.5% | 2.4ms|
   | TinyYolov3  | 61.3% | 2.3ms|
 
-  The models are **trained from scratch**.
+  The models are **trained from scratch with this implementation**.
 ---
 
 ### Preparation
