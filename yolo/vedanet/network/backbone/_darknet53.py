@@ -50,6 +50,7 @@ class Darknet53(nn.Module):
                 ('stage_6', bdkn.Stage(input_channels*(2**4), stage_cfg['stage_6'])),
             ]),
 
+            # the following is extra
             # layer 3
             # output third scale, largest
             OrderedDict([

@@ -71,6 +71,7 @@ class Darknet19(nn.Module):
                 ('21_convbatch',    vn_layer.Conv2dBatchLeaky(512, 1024, 3, 1)),
                 ('22_convbatch',    vn_layer.Conv2dBatchLeaky(1024, 512, 1, 1)),
                 ('23_convbatch',    vn_layer.Conv2dBatchLeaky(512, 1024, 3, 1)),
+                # the following is extra
                 ('24_convbatch',    vn_layer.Conv2dBatchLeaky(1024, 1024, 3, 1)),
                 ('25_convbatch',    vn_layer.Conv2dBatchLeaky(1024, 1024, 3, 1)),
             ]),

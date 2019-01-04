@@ -8,6 +8,7 @@ labels: ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", 
 data_root_dir: "/data2/yichaoxiong/data/VOCdevkit/onedet_cache"
 
 train:
+    dataset: "train"
     stdout: False
     gpus: "1"
     nworkers: 16
@@ -34,6 +35,7 @@ train:
     weights: ~ 
 
 test:
+    dataset: "test"
     stdout: True
     gpus: "3"
     nworkers: 8
@@ -49,7 +51,6 @@ test:
     results: "results"
 
 speed:
-    stdout: True
     gpus: "7"
     batch_size: 1
     max_iters: 200

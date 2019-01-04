@@ -8,6 +8,7 @@ labels: ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", 
 data_root_dir: "/data2/yichaoxiong/data/VOCdevkit/onedet_cache"
 
 train:
+    dataset: "train"
     stdout: False
     gpus: "3"
     nworkers: 16
@@ -19,9 +20,9 @@ train:
     clear: False
 
     warmup_lr: 0.0001
-    lr_steps: [400,700,900,1000, 40000,60000, 80000,90000,10000] 
-    lr_rates: [0.0005,0.001,0.002,0.02, 0.002,0.0002, 0.001,0.0001,0.00001] 
-    max_batches: 105200
+    lr_steps: [400,700,900,1000, 40000,60000] 
+    lr_rates: [0.0005,0.001,0.002,0.02, 0.002,0.0002] 
+    max_batches: 80200
     resize_interval: 10
 
     backup_interval: 200
@@ -31,17 +32,18 @@ train:
     input_shape: [608, 608]
     batch_size: 64
     mini_batch_size: 16
-    weights: "outputs/TinyYolov2/baseline/weights/backup.pt"
+    weights: ~
 
 test:
+    dataset: "test"
     stdout: True
-    gpus: "5"
+    gpus: "1"
     nworkers: 8
     pin_mem: True
 
     input_shape: [416, 416]
     batch_size: 16
-    weights: "outputs/TinyYolov2/baseline/weights/backup.pt"
+    weights: "weights/tiny_yolov2_80000.pt"
 
     conf_thresh: 0.005
     nms_thresh: 0.45

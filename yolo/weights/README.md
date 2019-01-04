@@ -13,6 +13,7 @@ Yolov3 50200 544x544 79.6
 TinyYolov2 80000 544x544 57.2
 
 TinyYolov2 80000 416x416 57.5
+TinyYolov2 80200 416x416 57.0
 
 ######
 TinyYolov3 80200 416x416 61.3

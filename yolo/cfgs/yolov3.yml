@@ -1,5 +1,5 @@
 output_root: "outputs"
-output_version: "test"
+output_version: "baseline"
 backup_name: "weights"
 log_name: "logs"
 
@@ -8,6 +8,7 @@ labels: ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", 
 data_root_dir: "/data2/yichaoxiong/data/VOCdevkit/onedet_cache"
 
 train:
+    dataset: "train"
     stdout: False
     gpus: "6"
     nworkers: 16
@@ -34,6 +35,7 @@ train:
     weights: "weights/darknet53.conv.74"
 
 test:
+    dataset: "test"
     stdout: True
     gpus: "3"
     nworkers: 8

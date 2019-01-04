@@ -25,7 +25,8 @@ class HyperParams(object):
 
             self.nworkers = cur_cfg['nworkers'] 
             self.pin_mem = cur_cfg['pin_mem'] 
-            self.trainfile = f'{self.data_root}/train.pkl'
+            dataset = cur_cfg['dataset']
+            self.trainfile = f'{self.data_root}/{dataset}.pkl'
 
             self.network_size = cur_cfg['input_shape']
 
@@ -59,7 +60,8 @@ class HyperParams(object):
         elif train_flag == 2:
             cur_cfg = config
 
-            self.testfile = f'{self.data_root}/test.pkl'
+            dataset = cur_cfg['dataset']
+            self.testfile = f'{self.data_root}/{dataset}.pkl'
             self.nworkers = cur_cfg['nworkers'] 
             self.pin_mem = cur_cfg['pin_mem'] 
             self.network_size = cur_cfg['input_shape']
