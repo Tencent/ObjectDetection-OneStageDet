@@ -40,7 +40,7 @@ Contents
   | TinyYolov2  | 57.5% | 2.4ms|
   | TinyYolov3  | 61.3% | 2.3ms|
 
-  The models are trained from scratch.
+  The models are **trained from scratch**.
 ---
 
 ### Preparation
