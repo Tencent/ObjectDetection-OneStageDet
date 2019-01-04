@@ -21,10 +21,12 @@ Contents
 - Include both Yolov2 and Yolov3
 - Good performance(trained with this implementation)
 
-  |544x544 |VOC2007 Test(mAP)|
-  | :-: | :-:|
-  | Yolov2  | 77.6% |
-  | Yolov3  | 79.6% |
+  |544x544 |VOC2007 Test(mAP)|Time per forward<br/>(batch size = 1)|
+  | :-: | :-:|:-:|
+  | Yolov2  | 77.6% |11.5ms|
+  | Yolov3  | 79.6% |23.1ms|
+  
+  The models are trained from pretrained weights on imagenet.
 
 - Train as fast as [darknet](https://github.com/pjreddie/darknet)
 - A lot of efficient backbones on hand
@@ -32,7 +34,13 @@ Contents
   Like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. 
 
   Check folder `vedanet/network/backbone` for details.
+  
+  |416x416 |VOC2007 Test(mAP)| Time per forward<br/>(batch size = 1)|
+  | :-: | :-:| :-: |
+  | TinyYolov2  | 57.5% | 2.4ms|
+  | TinyYolov3  | 61.3% | 2.3ms|
 
+  The models are trained from scratch.
 ---
 
 ### Preparation
@@ -120,6 +128,9 @@ Then, move all the model weights to `${yolo_root}/weights` directory.
 ##### 3) Results
 The logs and weights will be in `${yolo_root}/outputs`.
 
+##### 4) Other models
+There are many other models like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. You can try these like `1) Yolov2` part.
+
 ---
 
 ### Evaluation
@@ -141,6 +152,9 @@ The logs and weights will be in `${yolo_root}/outputs`.
 
 ##### 3) Results
 The output bbox will be in `${yolo_root}/results`,  every line of the file in   `${yolo_root}/results` has a format like `img_name confidence xmin ymin xmax ymax`
+
+##### 4) Other models
+There are many other models like tiny yolov2, tiny yolov3, mobilenet, mobilenetv2, shufflenet(g2), shufflenetv2(1x), squeezenext(1.0-SqNxt-23v5), light xception, xception etc. You can try these like `1) Yolov2` part.
 
 ---
 
@@ -183,7 +197,7 @@ The output bbox will be in `${yolo_root}/results`,  every line of the file in   
 `python examples/speed.py RegionMobilenet`
 
 ##### 6) Other backbones with region loss
-You can try these like [5) Mobilenet](#5-mobilenet) part.
+You can try these like `5) Mobilenet` part.
 
 ---
 
