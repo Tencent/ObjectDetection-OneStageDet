@@ -101,6 +101,7 @@ class GetBoundingBoxes(BaseTransform):
         scores = cls_scores[score_thresh].view(-1, 1)
         idx = (torch.arange(num_classes)).repeat(batch, num_anchors, w*h).cuda()
         idx = idx[score_thresh].view(-1, 1)
+        idx = idx.float()
         detections = torch.cat([coords, scores, idx], dim=1)
 
         # Get indexes of splits between images of batch
