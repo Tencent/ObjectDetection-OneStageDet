@@ -115,11 +115,11 @@ class WeightLoader:
 
     def load_layer(self, layer):
         """ Load weights for a layer from the weights file """
-        if type(layer) == nn.Conv2d:
+        if isinstance(layer, nn.Conv2d):
             self._load_conv(layer)
-        elif type(layer) == vn_layer.Conv2dBatchLeaky:
+        elif isinstance(layer, vn_layer.Conv2dBatchLeaky):
             self._load_convbatch(layer)
-        elif type(layer) == nn.Linear:
+        elif isinstance(layer, nn.Linear):
             self._load_fc(layer)
         else:
             raise NotImplementedError(f'The layer you are trying to load is not supported [{type(layer)}]')
@@ -193,11 +193,11 @@ class WeightSaver:
 
     def save_layer(self, layer):
         """ save weights for a layer """
-        if type(layer) == nn.Conv2d:
+        if isinstance(layer, nn.Conv2d):
             self._save_conv(layer)
-        elif type(layer) == vn_layer.Conv2dBatchLeaky:
+        elif isinstance(layer, vn_layer.Conv2dBatchLeaky):
             self._save_convbatch(layer)
-        elif type(layer) == nn.Linear:
+        elif isinstance(layer, nn.Linear):
             self._save_fc(layer)
         else:
             raise NotImplementedError(f'The layer you are trying to save is not supported [{type(layer)}]')

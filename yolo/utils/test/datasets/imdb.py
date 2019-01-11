@@ -13,6 +13,11 @@ import numpy as np
 import scipy.sparse
 from fast_rcnn.config import cfg
 
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
+
 class imdb(object):
     """Image database."""
 
@@ -140,7 +145,7 @@ class imdb(object):
                         [256**2, 512**2],  # 256-512
                         [512**2, 1e5**2],  # 512-inf
                       ]
-        assert areas.has_key(area), 'unknown area range: {}'.format(area)
+        assert area in areas, 'unknown area range: {}'.format(area)
         area_range = area_ranges[areas[area]]
         gt_overlaps = np.zeros(0)
         num_pos = 0

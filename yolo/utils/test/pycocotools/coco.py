@@ -1,3 +1,4 @@
+from __future__ import print_function
 __author__ = 'tylin'
 __version__ = '1.0.1'
 # Interface for accessing the Microsoft COCO dataset.
@@ -74,16 +75,16 @@ class COCO:
         self.imgs = {}
         self.cats = {}
         if not annotation_file == None:
-            print 'loading annotations into memory...'
+            print('loading annotations into memory...')
             tic = time.time()
             dataset = json.load(open(annotation_file, 'r'))
-            print 'Done (t=%0.2fs)'%(time.time()- tic)
+            print('Done (t=%0.2fs)'%(time.time()- tic))
             self.dataset = dataset
             self.createIndex()
 
     def createIndex(self):
         # create index
-        print 'creating index...'
+        print('creating index...')
         anns = {}
         imgToAnns = {}
         catToImgs = {}
@@ -110,7 +111,7 @@ class COCO:
                 for ann in self.dataset['annotations']:
                     catToImgs[ann['category_id']] += [ann['image_id']]
 
-        print 'index created!'
+        print('index created!')
 
         # create class members
         self.anns = anns
@@ -125,7 +126,7 @@ class COCO:
         :return:
         """
         for key, value in self.dataset['info'].items():
-            print '%s: %s'%(key, value)
+            print('%s: %s'%(key, value))
 
     def getAnnIds(self, imgIds=[], catIds=[], areaRng=[], iscrowd=None):
         """
@@ -136,8 +137,8 @@ class COCO:
                iscrowd (boolean)       : get anns for given crowd label (False or True)
         :return: ids (int array)       : integer array of ann ids
         """
-        imgIds = imgIds if type(imgIds) == list else [imgIds]
-        catIds = catIds if type(catIds) == list else [catIds]
+        imgIds = imgIds if isinstance(imgIds, list) else [imgIds]
+        catIds = catIds if isinstance(catIds, list) else [catIds]
 
         if len(imgIds) == len(catIds) == len(areaRng) == 0:
             anns = self.dataset['annotations']
@@ -164,9 +165,9 @@ class COCO:
         :param catIds (int array)  : get cats for given cat ids
         :return: ids (int array)   : integer array of cat ids
         """
-        catNms = catNms if type(catNms) == list else [catNms]
-        supNms = supNms if type(supNms) == list else [supNms]
-        catIds = catIds if type(catIds) == list else [catIds]
+        catNms = catNms if isinstance(catNms, list) else [catNms]
+        supNms = supNms if isinstance(supNms, list) else [supNms]
+        catIds = catIds if isinstance(catIds, list) else [catIds]
 
         if len(catNms) == len(supNms) == len(catIds) == 0:
             cats = self.dataset['categories']
@@ -185,8 +186,8 @@ class COCO:
         :param catIds (int array) : get imgs with all given cats
         :return: ids (int array)  : integer array of img ids
         '''
-        imgIds = imgIds if type(imgIds) == list else [imgIds]
-        catIds = catIds if type(catIds) == list else [catIds]
+        imgIds = imgIds if isinstance(imgIds, list) else [imgIds]
+        catIds = catIds if isinstance(catIds, list) else [catIds]
 
         if len(imgIds) == len(catIds) == 0:
             ids = self.imgs.keys()
@@ -205,9 +206,9 @@ class COCO:
         :param ids (int array)       : integer ids specifying anns
         :return: anns (object array) : loaded ann objects
         """
-        if type(ids) == list:
+        if isinstance(ids, list):
             return [self.anns[id] for id in ids]
-        elif type(ids) == int:
+        elif isinstance(ids, int):
             return [self.anns[ids]]
 
     def loadCats(self, ids=[]):
@@ -216,9 +217,9 @@ class COCO:
         :param ids (int array)       : integer ids specifying cats
         :return: cats (object array) : loaded cat objects
         """
-        if type(ids) == list:
+        if isinstance(ids, list):
             return [self.cats[id] for id in ids]
-        elif type(ids) == int:
+        elif isinstance(ids, int):
             return [self.cats[ids]]
 
     def loadImgs(self, ids=[]):
@@ -227,9 +228,9 @@ class COCO:
         :param ids (int array)       : integer ids specifying img
         :return: imgs (object array) : loaded img objects
         """
-        if type(ids) == list:
+        if isinstance(ids, list):
             return [self.imgs[id] for id in ids]
-        elif type(ids) == int:
+        elif isinstance(ids, int):
             return [self.imgs[ids]]
 
     def showAnns(self, anns):
@@ -250,7 +251,7 @@ class COCO:
             color = []
             for ann in anns:
                 c = np.random.random((1, 3)).tolist()[0]
-                if type(ann['segmentation']) == list:
+                if isinstance(ann['segmentation'], list):
                     # polygon
                     for seg in ann['segmentation']:
                         poly = np.array(seg).reshape((len(seg)/2, 2))
@@ -259,7 +260,7 @@ class COCO:
                 else:
                     # mask
                     t = self.imgs[ann['image_id']]
-                    if type(ann['segmentation']['counts']) == list:
+                    if isinstance(ann['segmentation']['counts'], list):
                         rle = mask.frPyObjects([ann['segmentation']], t['height'], t['width'])
                     else:
                         rle = [ann['segmentation']]
@@ -276,7 +277,7 @@ class COCO:
             ax.add_collection(p)
         elif datasetType == 'captions':
             for ann in anns:
-                print ann['caption']
+                print(ann['caption'])
 
     def loadRes(self, resFile):
         """
@@ -289,10 +290,10 @@ class COCO:
         # res.dataset['info'] = copy.deepcopy(self.dataset['info'])
         # res.dataset['licenses'] = copy.deepcopy(self.dataset['licenses'])
 
-        print 'Loading and preparing results...     '
+        print('Loading and preparing results...     ')
         tic = time.time()
         anns    = json.load(open(resFile))
-        assert type(anns) == list, 'results in not an array of objects'
+        assert isinstance(anns, list), 'results in not an array of objects'
         annsImgIds = [ann['image_id'] for ann in anns]
         assert set(annsImgIds) == (set(annsImgIds) & set(self.getImgIds())), \
                'Results do not correspond to current coco set'
@@ -320,7 +321,7 @@ class COCO:
                     ann['bbox'] = mask.toBbox([ann['segmentation']])[0]
                 ann['id'] = id+1
                 ann['iscrowd'] = 0
-        print 'DONE (t=%0.2fs)'%(time.time()- tic)
+        print('DONE (t=%0.2fs)'%(time.time()- tic))
 
         res.dataset['annotations'] = anns
         res.createIndex()
@@ -334,7 +335,7 @@ class COCO:
         :return:
         '''
         if tarDir is None:
-            print 'Please specify target directory'
+            print('Please specify target directory')
             return -1
         if len(imgIds) == 0:
             imgs = self.imgs.values()
@@ -348,4 +349,4 @@ class COCO:
             fname = os.path.join(tarDir, img['file_name'])
             if not os.path.exists(fname):
                 urllib.urlretrieve(img['coco_url'], fname)
-            print 'downloaded %d/%d images (t=%.1fs)'%(i, N, time.time()- tic)
+            print('downloaded %d/%d images (t=%.1fs)'%(i, N, time.time()- tic))

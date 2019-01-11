@@ -46,7 +46,7 @@ def parse(fmt, box_file, identify=None, offset=0, stride=1, **kwargs):
     """
 
     # Create parser
-    if type(fmt) is str:
+    if isinstance(fmt, str):
         try:
             parser = formats[fmt](**kwargs)
         except KeyError:
@@ -58,7 +58,7 @@ def parse(fmt, box_file, identify=None, offset=0, stride=1, **kwargs):
 
     # Parse bounding boxes
     if parser.parser_type == ParserType.SINGLE_FILE:
-        if type(box_file) is not str:
+        if not isinstance(box_file, str):
             raise TypeError(f'Parser <{parser.__class__.__name__}> requires a single annotation file')
         with open(box_file, parser.read_mode) as f:
             data = parser.deserialize(f.read())
@@ -90,9 +90,9 @@ def parse(fmt, box_file, identify=None, offset=0, stride=1, **kwargs):
         if identify is not None:
             data = {identify(key): value for key, value in data.items()}
     elif parser.parser_type == ParserType.MULTI_FILE:
-        if type(box_file) is str:
+        if isinstance(box_file, str):
             box_files = expand(box_file, stride, offset)
-        elif type(box_file) is list:
+        elif isinstance(box_file, list):
             box_files = box_file
         else:
             raise TypeError(f'Parser <{parser.__class__.__name__}> requires a list of annotation files or an expandable file expression')
@@ -132,7 +132,7 @@ def generate(fmt, box, path, **kwargs):
     """
 
     # Create parser
-    if type(fmt) is str:
+    if isinstance(fmt, str):
         try:
             parser = formats[fmt](**kwargs)
         except KeyError:

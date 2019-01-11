@@ -1,3 +1,4 @@
+from __future__ import print_function
 # --------------------------------------------------------
 # Fast R-CNN
 # Copyright (c) 2015 Microsoft
@@ -18,6 +19,11 @@ import subprocess
 import uuid
 from person_eval import person_eval
 from fast_rcnn.config import cfg
+
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
 
 class person_head(imdb):
     def __init__(self, devkit_path=None):
@@ -99,7 +105,7 @@ class person_head(imdb):
         for cls_ind, cls in enumerate(self.classes):
             if cls == '__background__':
                 continue
-            print 'Writing {} VOC results file'.format(cls)
+            print('Writing {} VOC results file'.format(cls))
             filename = self._get_voc_results_file_template().format(cls)
             if not os.path.exists(os.path.dirname(filename)):
                 os.makedirs(os.path.dirname(filename))
@@ -131,7 +137,7 @@ class person_head(imdb):
         aps = []
         # The PASCAL VOC metric changed in 2010
         use_07_metric = True #True if int(self._year) < 2010 else False
-        print 'VOC07 metric? ' + ('Yes' if use_07_metric else 'No')
+        print('VOC07 metric? ' + ('Yes' if use_07_metric else 'No'))
         if not os.path.isdir(output_dir):
             os.mkdir(output_dir)
         for i, cls in enumerate(self._classes):

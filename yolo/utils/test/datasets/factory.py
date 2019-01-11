@@ -6,6 +6,7 @@
 # --------------------------------------------------------
 
 """Factory method for easily getting imdbs by name."""
+from __future__ import print_function
 
 __sets = {}
 
@@ -37,8 +38,8 @@ __sets['person_head'] = (lambda: person_head())
 
 def get_imdb(name):
     """Get an imdb (image database) by name."""
-    if not __sets.has_key(name):
-        print __sets
+    if name not in __sets:
+        print(__sets)
         raise KeyError('Unknown dataset: {}'.format(name))
     return __sets[name]()
 

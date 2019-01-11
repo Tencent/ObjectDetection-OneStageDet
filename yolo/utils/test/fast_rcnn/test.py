@@ -1,3 +1,4 @@
+from __future__ import print_function
 from fast_rcnn.config import cfg, get_output_dir
 import numpy as np
 import cv2
@@ -6,6 +7,11 @@ from fast_rcnn.nms_wrapper import nms, soft_nms
 import cPickle
 import os
 import time
+
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
 
 def im_detect(net, im, targe_size):
     im_orig = im.astype(np.float32, copy=True)
@@ -237,18 +243,18 @@ def single_scale_test_net(net, imdb, targe_size=(320, 320), vis=False):
                 if vis:
                     vis_detections(im, imdb.classes[j], cls_dets)
 
-        print 'im_detect: {:d}/{:d} {:.4f}s'.format(i + 1, num_images, net_time / (i + 1))
+        print('im_detect: {:d}/{:d} {:.4f}s'.format(i + 1, num_images, net_time / (i + 1)))
 
     det_file = os.path.join(output_dir, 'detections.pkl')
     with open(det_file, 'wb') as f:
         cPickle.dump(all_boxes, f, cPickle.HIGHEST_PROTOCOL)
 
     if imdb.name == 'voc_2012_test':
-        print 'Saving detections'
+        print('Saving detections')
         imdb.config['use_salt'] = False
         imdb._write_voc_results_file(all_boxes)
     else:
-        print 'Evaluating detections'
+        print('Evaluating detections')
         imdb.evaluate_detections(all_boxes, output_dir)
 
 
@@ -331,18 +337,18 @@ def multi_scale_test_net_320(net, imdb, vis=False):
                 if vis:
                     vis_detections(im, imdb.classes[j], cls_dets)
 
-        print 'im_detect: {:d}/{:d}'.format(i + 1, num_images)
+        print('im_detect: {:d}/{:d}'.format(i + 1, num_images))
 
     det_file = os.path.join(output_dir, 'detections.pkl')
     with open(det_file, 'wb') as f:
         cPickle.dump(all_boxes, f, cPickle.HIGHEST_PROTOCOL)
 
     if imdb.name == 'voc_2012_test':
-        print 'Saving detections'
+        print('Saving detections')
         imdb.config['use_salt'] = False
         imdb._write_voc_results_file(all_boxes)
     else:
-        print 'Evaluating detections'
+        print('Evaluating detections')
         imdb.evaluate_detections(all_boxes, output_dir)
 
 
@@ -421,16 +427,16 @@ def multi_scale_test_net_512(net, imdb, vis=False):
                 if vis:
                     vis_detections(im, imdb.classes[j], cls_dets)
 
-        print 'im_detect: {:d}/{:d}'.format(i + 1, num_images)
+        print('im_detect: {:d}/{:d}'.format(i + 1, num_images))
 
     det_file = os.path.join(output_dir, 'detections.pkl')
     with open(det_file, 'wb') as f:
         cPickle.dump(all_boxes, f, cPickle.HIGHEST_PROTOCOL)
 
     if imdb.name == 'voc_2012_test':
-        print 'Saving detections'
+        print('Saving detections')
         imdb.config['use_salt'] = False
         imdb._write_voc_results_file(all_boxes)
     else:
-        print 'Evaluating detections'
+        print('Evaluating detections')
         imdb.evaluate_detections(all_boxes, output_dir)

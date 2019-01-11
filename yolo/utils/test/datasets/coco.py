@@ -1,3 +1,4 @@
+from __future__ import print_function
 # --------------------------------------------------------
 # Fast/er R-CNN
 # Licensed under The MIT License [see LICENSE for details]
@@ -20,6 +21,11 @@ import uuid
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 from pycocotools import mask as COCOmask
+
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
 
 def _filter_crowd_proposals(roidb, crowd_thresh):
     """
@@ -78,7 +84,7 @@ class coco(imdb):
         }
         coco_name = image_set + year  # e.g., "val2014"
         self._data_name = (self._view_map[coco_name]
-                           if self._view_map.has_key(coco_name)
+                           if coco_name in self._view_map
                            else coco_name)
         # Dataset splits that have ground-truth annotations (test splits
         # do not have gt annotations)
@@ -143,7 +149,7 @@ class coco(imdb):
 
     def _load_rpn_roidb(self, gt_roidb):
         filename = self.config['rpn_file']
-        print 'loading {}'.format(filename)
+        print('loading {}'.format(filename))
         assert os.path.exists(filename), \
                'rpn data not found at: {}'.format(filename)
         with open(filename, 'rb') as f:
@@ -162,8 +168,8 @@ class coco(imdb):
         if osp.exists(cache_file):
             with open(cache_file, 'rb') as fid:
                 roidb = cPickle.load(fid)
-            print '{:s} {:s} roidb loaded from {:s}'.format(self.name, method,
-                                                            cache_file)
+            print('{:s} {:s} roidb loaded from {:s}'.format(self.name, method,
+                                                            cache_file))
             return roidb
 
         if self._image_set in self._gt_splits:
@@ -176,7 +182,7 @@ class coco(imdb):
             roidb = self._load_proposals(method, None)
         with open(cache_file, 'wb') as fid:
             cPickle.dump(roidb, fid, cPickle.HIGHEST_PROTOCOL)
-        print 'wrote {:s} roidb to {:s}'.format(method, cache_file)
+        print('wrote {:s} roidb to {:s}'.format(method, cache_file))
         return roidb
 
     def _load_proposals(self, method, gt_roidb):
@@ -198,10 +204,10 @@ class coco(imdb):
             'edge_boxes_70']
         assert method in valid_methods
 
-        print 'Loading {} boxes'.format(method)
+        print('Loading {} boxes'.format(method))
         for i, index in enumerate(self._image_index):
             if i % 1000 == 0:
-                print '{:d} / {:d}'.format(i + 1, len(self._image_index))
+                print('{:d} / {:d}'.format(i + 1, len(self._image_index)))
 
             box_file = osp.join(
                 cfg.DATA_DIR, 'coco_proposals', method, 'mat',
@@ -235,7 +241,7 @@ class coco(imdb):
         if osp.exists(cache_file):
             with open(cache_file, 'rb') as fid:
                 roidb = cPickle.load(fid)
-            print '{} gt roidb loaded from {}'.format(self.name, cache_file)
+            print('{} gt roidb loaded from {}'.format(self.name, cache_file))
             return roidb
 
         gt_roidb = [self._load_coco_annotation(index)
@@ -243,7 +249,7 @@ class coco(imdb):
 
         with open(cache_file, 'wb') as fid:
             cPickle.dump(gt_roidb, fid, cPickle.HIGHEST_PROTOCOL)
-        print 'wrote gt roidb to {}'.format(cache_file)
+        print('wrote gt roidb to {}'.format(cache_file))
         return gt_roidb
 
     def _load_coco_annotation(self, index):
@@ -327,18 +333,18 @@ class coco(imdb):
         precision = \
             coco_eval.eval['precision'][ind_lo:(ind_hi + 1), :, :, 0, 2]
         ap_default = np.mean(precision[precision > -1])
-        print ('~~~~ Mean and per-category AP @ IoU=[{:.2f},{:.2f}] '
-               '~~~~').format(IoU_lo_thresh, IoU_hi_thresh)
-        print '{:.1f}'.format(100 * ap_default)
+        print(('~~~~ Mean and per-category AP @ IoU=[{:.2f},{:.2f}] '
+               '~~~~').format(IoU_lo_thresh, IoU_hi_thresh))
+        print('{:.1f}'.format(100 * ap_default))
         for cls_ind, cls in enumerate(self.classes):
             if cls == '__background__':
                 continue
             # minus 1 because of __background__
             precision = coco_eval.eval['precision'][ind_lo:(ind_hi + 1), :, cls_ind - 1, 0, 2]
             ap = np.mean(precision[precision > -1])
-            print '{:.1f}'.format(100 * ap)
+            print('{:.1f}'.format(100 * ap))
 
-        print '~~~~ Summary metrics ~~~~'
+        print('~~~~ Summary metrics ~~~~')
         coco_eval.summarize()
         cfg.mAP = coco_eval.stats
 
@@ -353,12 +359,12 @@ class coco(imdb):
         eval_file = osp.join(output_dir, 'detection_results.pkl')
         with open(eval_file, 'wb') as fid:
             cPickle.dump(coco_eval, fid, cPickle.HIGHEST_PROTOCOL)
-        print 'Wrote COCO eval results to: {}'.format(eval_file)
+        print('Wrote COCO eval results to: {}'.format(eval_file))
 
     def _coco_results_one_category(self, boxes, cat_id):
         results = []
         for im_ind, index in enumerate(self.image_index):
-            if type(boxes[im_ind]) == list:
+            if isinstance(boxes[im_ind], list):
                 continue
             dets = boxes[im_ind].astype(np.float)
             if dets == []:
@@ -397,12 +403,12 @@ class coco(imdb):
         for cls_ind, cls in enumerate(self.classes):
             if cls == '__background__':
                 continue
-            print 'Collecting {} results ({:d}/{:d})'.format(cls, cls_ind,
-                                                          self.num_classes - 1)
+            print('Collecting {} results ({:d}/{:d})'.format(cls, cls_ind,
+                                                          self.num_classes - 1))
             coco_cat_id = self._class_to_coco_cat_id[cls]
             results.extend(self._coco_results_one_category(all_boxes[cls_ind],
                                                            coco_cat_id))
-        print 'Writing results json to {}'.format(res_file)
+        print('Writing results json to {}'.format(res_file))
         with open(res_file, 'w') as fid:
             json.dump(results, fid)
 

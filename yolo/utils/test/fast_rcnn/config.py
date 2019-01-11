@@ -247,17 +247,17 @@ def _merge_a_into_b(a, b):
     """Merge config dictionary a into config dictionary b, clobbering the
     options in b whenever they are also specified in a.
     """
-    if type(a) is not edict:
+    if not isinstance(a, edict):
         return
 
     for k, v in a.iteritems():
         # a must specify keys that are in b
-        if not b.has_key(k):
+        if k not in b:
             raise KeyError('{} is not a valid config key'.format(k))
 
         # the types must match, too
         old_type = type(b[k])
-        if old_type is not type(v):
+        if not isinstance(v, old_type):
             if isinstance(b[k], np.ndarray):
                 v = np.array(v, dtype=b[k].dtype)
             else:
@@ -266,7 +266,7 @@ def _merge_a_into_b(a, b):
                                                             type(v), k))
 
         # recursively merge dicts
-        if type(v) is edict:
+        if isinstance(v, edict):
             try:
                 _merge_a_into_b(a[k], b[k])
             except:
@@ -291,16 +291,16 @@ def cfg_from_list(cfg_list):
         key_list = k.split('.')
         d = __C
         for subkey in key_list[:-1]:
-            assert d.has_key(subkey)
+            assert subkey in d
             d = d[subkey]
         subkey = key_list[-1]
-        assert d.has_key(subkey)
+        assert subkey in d
         try:
             value = literal_eval(v)
         except:
             # handle the case when v is a string literal
             value = v
-        assert type(value) == type(d[subkey]), \
+        assert isinstance(value, type(d[subkey])), \
             'type {} does not match original type {}'.format(
             type(value), type(d[subkey]))
         d[subkey] = value
