@@ -1,4 +1,4 @@
-Download weights from [baidudrive](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw#list/path=%2F) or [googledrieve](https://drive.google.com/open?id=1nW3u35_5b0ILs2u9TOQ5Nubjx8-1ewwc)
+Download weights from [baidudrive](https://pan.baidu.com/s/1a3Z5IUylBs6rI-GYg3RGbw#list/path=%2F) or [googledrive](https://drive.google.com/open?id=1nW3u35_5b0ILs2u9TOQ5Nubjx8-1ewwc)
 
 format: model_name train_iterations network_size mAP_on_VOC2007Test
 
