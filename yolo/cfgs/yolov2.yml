@@ -5,12 +5,12 @@ log_name: "logs"
 
 labels: ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 
-data_root_dir: "/data2/yichaoxiong/data/VOCdevkit/onedet_cache"
+data_root_dir: "VOCdevkit/onedet_cache"
 
 train:
     dataset: "train"
-    stdout: False
-    gpus: "2"
+    stdout: True
+    gpus: "0"
     nworkers: 16
     pin_mem: True
 
@@ -36,9 +36,9 @@ train:
 
 test:
     dataset: "test"
-    stdout: True
-    gpus: "3"
-    nworkers: 8
+    stdout: False
+    gpus: "0"
+    nworkers: 4
     pin_mem: True
 
     input_shape: [544, 544]
