@@ -1,0 +1,12 @@
+cfg_dict:
+    Yolov3: yolov3.yml
+    Yolov2: yolov2.yml
+    RegionMobilenet: region_mobilenet.yml
+    RegionMobilenetv2: region_mobilenetv2.yml
+    TinyYolov2: tiny_yolov2.yml
+    TinyYolov3: tiny_yolov3.yml
+    RegionShufflenet: region_shufflenet.yml
+    RegionShufflenetv2: region_shufflenetv2.yml
+    RegionSqueezenext: region_squeezenext.yml
+    RegionXception: region_xception.yml
+    RegionLightXception: region_light_xception.yml
