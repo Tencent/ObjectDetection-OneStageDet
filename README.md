@@ -1,7 +1,7 @@
 <img src="figures/OSD_logo.PNG" title="Logo" width="300" /> 
 
 ## Contents
-##### [Introduction](#Introduction)
+##### [Introduction](#introduction)
 ##### [Requirements](#requirements)
 ##### [Features](#features)
 ##### [Getting Started](#Getting)
@@ -10,7 +10,7 @@
 - [Evaluation](#evaluation)
 - [Benchmarking the speed of network](#benchmarking-the-speed-of-network)
 
-##### [Credits](#Credits)
+##### [Credits](#credits)
 
 ## Introduction
 Now we have implemented yolov2 and yolov3 in this repo, which is a generation object detection framework named OneStageDet(OSD), in the future we consider to implement yolo and ssd in a single framework. 
