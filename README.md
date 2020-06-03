@@ -1,7 +1,5 @@
 <img src="figures/OSD_logo.PNG" title="Logo" width="300" /> 
 
-## OneStageDet(OSD)
-
 ## Contents
 ##### [Introduction](#Introduction)
 ##### [Requirements](#requirements)
@@ -15,7 +13,7 @@
 ##### [Credits](#Credits)
 
 ## Introduction
-Now we have implemented yolov2 and yolov3 in the `yolo` folder, in the future we consider to implement yolo and ssd in a single framework. 
+Now we have implemented yolov2 and yolov3 in this repo, which is a generation object detection framework named OneStageDet(OSD), in the future we consider to implement yolo and ssd in a single framework. 
 
 ## Requirements
 - python 3.6
@@ -54,8 +52,8 @@ Now we have implemented yolov2 and yolov3 in the `yolo` folder, in the future we
 ##### 1) Code
 
 ```bash
-git clone https://github.com/TencentYoutuResearch/ObjectDetection-OneStageDet
-cd ObjectDetection-OneStageDet/yolo
+git clone xxxxx/ObjectDetection-OneStageDet
+cd ObjectDetection-OneStageDet/
 yolo_root=$(pwd)
 cd ${yolo_root}/utils/test
 make -j32
